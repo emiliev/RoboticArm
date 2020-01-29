@@ -118,6 +118,7 @@ bool Robot::caclulateFullTransormationMatrix() {
     for (unsigned int i = 0 ; i < hmtx.size() ; i++)
     {
         Eigen::Matrix4f _temp = from_i_1_to_i;
+        std::cout << hmtx[i] << std::endl;
         from_i_1_to_i = _temp * hmtx[i];
     }
 

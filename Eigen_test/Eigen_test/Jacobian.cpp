@@ -83,56 +83,29 @@ void Jacobian::calculateColumnOfJacobian_New(HomMatrixHolder& hom_matrix_handler
 
     //Position of end effector
     p_end_effector<< fullm(0,3), fullm(1,3), fullm(2,3);
-
-#ifdef JACOBIANDEBUGOUTPUT
-    std::cout<<"Pe "<<std::endl<<p_end_effector<<std::endl;
-#endif
-
     transf_matrix = Eigen::Matrix4f::Identity();
 
-    //
-    
-    for(unsigned int i = 0 ; i < ind ; ++i)
+    for(unsigned int i = 0 ; i < ind ; ++i) {
         transf_matrix *= hom_matrix_handler[i];
-
-#ifdef JACOBIANDEBUGOUTPUT
-    std::cout<<"Transform matrix 4x4"<<std::endl<<transf_matrix<<std::endl;
-#endif
+    }
 
     rot_m = transf_matrix.block(0,0,3,3);
-
-#ifdef JACOBIANDEBUGOUTPUT
-    std::cout<<"Rotation matrix 3x3"<<std::endl<<rot_m<<std::endl;
-#endif
 
     //
     //  Zi-1
     //
-
     zi = rot_m * z0;
     pi << transf_matrix(0,3) , transf_matrix(1,3) , transf_matrix(2,3);
-
-#ifdef JACOBIANDEBUGOUTPUT
-    std::cout<<"Zi "<<std::endl<<zi<<std::endl;
-    std::cout<<"Pi "<<std::endl<<pi<<std::endl;
-#endif
 
     //
     //  (Pe - Pi-1)
     //
     Eigen::Vector3f delta_vec = p_end_effector - pi;
 
-#ifdef JACOBIANDEBUGOUTPUT
-    std::cout<<"Delta vectors "<<std::endl<<delta_vec<<std::endl;
-#endif
     //
     //  Zi x (Pe - Pi-1)
     //
     Eigen::Vector3f d_rev = zi.cross(delta_vec);
-
-#ifdef JACOBIANDEBUGOUTPUT
-    std::cout<<"Eigen mult d_rev"<<std::endl<<d_rev<<std::endl;
-#endif
 
     //We should get type of joint and go further
     switch(jt) {
@@ -147,8 +120,7 @@ void Jacobian::calculateColumnOfJacobian_New(HomMatrixHolder& hom_matrix_handler
         _jacobian(3,ind) = 0.0f;
         _jacobian(4,ind) = 0.0f;
         _jacobian(5,ind) = 0.0f;
-        //Mission for this column complete
-        return;
+        break;
     case REVOLUTE:
         //For revolute joint everything is harder :
         //        | z * d | <--- calculated vector z * vector d
@@ -161,10 +133,7 @@ void Jacobian::calculateColumnOfJacobian_New(HomMatrixHolder& hom_matrix_handler
         _jacobian(4,ind) = zi(1);
         _jacobian(5,ind) = zi(2);
         break;
+    default:
+        break;
     }
-
-#ifdef JACOBIANDEBUGOUTPUT
-    std::cout<<"Jacobian column "<<ind<<std::endl<<_jacobian.col(ind)<<std::endl;
-#endif
-
 }

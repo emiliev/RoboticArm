@@ -11,10 +11,10 @@
 #include "Robot.hpp"
 #include <iostream>
 
-JacobianTranspose::JacobianTranspose(Eigen::VectorXf& desired_position ,Robot& robot):
-                                            mtxinstance(MatrixFactory::getInstance()),
-                                            _desired_position(desired_position),
-                                            _robot(robot) {
+JacobianTranspose::JacobianTranspose(Robot& robot):
+        mtxinstance(MatrixFactory::getInstance()),
+        _robot(robot) {
+    _desired_position = Eigen::VectorXf(6);
     current_position.resize(6);
 }
 
@@ -22,8 +22,9 @@ void JacobianTranspose::setAdditionalParameter(float& add_in ) {
     lamda_coefficent = add_in;
 }
 
-Eigen::VectorXf JacobianTranspose::calculateData() {
+Eigen::VectorXf JacobianTranspose::calculateData(Eigen::VectorXf& desired_position) {
     //Result vector
+    _desired_position = desired_position;
     Eigen::VectorXf delta_theta(_robot.giveMeMatrixHolder().size());
     //Vector for delta moving in space
     Eigen::VectorXf delta_translation(6);

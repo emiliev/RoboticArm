@@ -9,16 +9,19 @@
 #include "JacobianPseudoInverse.hpp"
 #include "Jacobian.hpp"
 #include <iostream>
+#include <Eigen/StdVector>
 
-JacobianPseudoInverse::JacobianPseudoInverse(Eigen::VectorXf& desired_position,
-                                             Robot& robot):
-                                                    mtxinstance(MatrixFactory::getInstance()),
-                                                    _desired_position(desired_position),
-                                                    _robot(robot) {
-    current_position.resize(6);
+JacobianPseudoInverse::JacobianPseudoInverse(Robot& robot):
+    mtxinstance(MatrixFactory::getInstance()),
+//    _desired_position(Eigen::VectorXf(6)),
+    _robot(robot) {
+        _desired_position = Eigen::VectorXf(6);
+//        re
+//        _desired_position = Vector
+        current_position.resize(6);
 }
 
-Eigen::VectorXf JacobianPseudoInverse::calculateData() {
+Eigen::VectorXf JacobianPseudoInverse::calculateData(Eigen::VectorXf& desired_position) {
     //Result vector
     Eigen::VectorXf delta_theta(_robot.giveMeMatrixHolder().size());
     //Vector for delta moving in space

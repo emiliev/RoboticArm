@@ -11,19 +11,18 @@
 
 #include <stdio.h>
 #include "AbstractSolver.hpp"
-#include "MatrixFactory.hpp"
 #include "Robot.hpp"
 
 class JacobianPseudoInverse : public AbstractSolver {
     MatrixFactory* mtxinstance;
-    Eigen::VectorXf& _desired_position;
+    Eigen::VectorXf _desired_position;
     Robot& _robot;
     Eigen::VectorXf current_position;
 
 public:
-    JacobianPseudoInverse(Eigen::VectorXf& desired_position, Robot& robot);
+    JacobianPseudoInverse(Robot& robot);
 
-    Eigen::VectorXf calculateData();
+    Eigen::VectorXf calculateData(Eigen::VectorXf& desired_position);
     void setAdditionalParameter(float& add_in){ }
     void updateJoints(Eigen::VectorXf& delta_theta);
 };

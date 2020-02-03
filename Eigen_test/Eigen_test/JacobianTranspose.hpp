@@ -18,13 +18,13 @@ class JacobianTranspose : public AbstractSolver
 {
     MatrixFactory*  mtxinstance;
     float lamda_coefficent;
-    Eigen::VectorXf& _desired_position;
+    Eigen::VectorXf _desired_position;
     Eigen::VectorXf current_position;
     Robot& _robot;
 
 public:
-    JacobianTranspose(Eigen::VectorXf& desired_position, Robot& robot);
-    Eigen::VectorXf calculateData();
+    JacobianTranspose(Robot& robot);
+    Eigen::VectorXf calculateData(Eigen::VectorXf& desired_position);
     void setAdditionalParameter(float& add_in);
     void updateJoints(Eigen::VectorXf& delta_theta);
 };

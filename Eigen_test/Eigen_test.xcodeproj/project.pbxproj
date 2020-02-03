@@ -17,6 +17,8 @@
 		BD40C1CA2358E42B008FEDC3 /* Joint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD40C1C82358E42B008FEDC3 /* Joint.cpp */; };
 		BD40C1CD2358E434008FEDC3 /* Link.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD40C1CB2358E434008FEDC3 /* Link.cpp */; };
 		BD40C1D12359CEE8008FEDC3 /* Jacobian.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD40C1CF2359CEE8008FEDC3 /* Jacobian.cpp */; };
+		BD63DB1123E8B46B0030E84A /* RobotHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD63DB0F23E8B46B0030E84A /* RobotHandler.cpp */; };
+		BD63DB1523E8BC1A0030E84A /* SolverBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD63DB1323E8BC1A0030E84A /* SolverBuilder.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -54,6 +56,10 @@
 		BD40C1CE2359B107008FEDC3 /* SharedTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedTypes.h; sourceTree = "<group>"; };
 		BD40C1CF2359CEE8008FEDC3 /* Jacobian.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Jacobian.cpp; sourceTree = "<group>"; };
 		BD40C1D02359CEE8008FEDC3 /* Jacobian.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Jacobian.hpp; sourceTree = "<group>"; };
+		BD63DB0F23E8B46B0030E84A /* RobotHandler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RobotHandler.cpp; sourceTree = "<group>"; };
+		BD63DB1023E8B46B0030E84A /* RobotHandler.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RobotHandler.hpp; sourceTree = "<group>"; };
+		BD63DB1323E8BC1A0030E84A /* SolverBuilder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SolverBuilder.cpp; sourceTree = "<group>"; };
+		BD63DB1423E8BC1A0030E84A /* SolverBuilder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SolverBuilder.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +113,10 @@
 				BD34501E235AF4C200D41ED0 /* JacobianPseudoInverse.hpp */,
 				BD345020235AF65800D41ED0 /* JacobianTranspose.cpp */,
 				BD345021235AF65800D41ED0 /* JacobianTranspose.hpp */,
+				BD63DB0F23E8B46B0030E84A /* RobotHandler.cpp */,
+				BD63DB1023E8B46B0030E84A /* RobotHandler.hpp */,
+				BD63DB1323E8BC1A0030E84A /* SolverBuilder.cpp */,
+				BD63DB1423E8BC1A0030E84A /* SolverBuilder.hpp */,
 			);
 			path = Eigen_test;
 			sourceTree = "<group>";
@@ -176,7 +186,9 @@
 				BD40C1D12359CEE8008FEDC3 /* Jacobian.cpp in Sources */,
 				BD345022235AF65800D41ED0 /* JacobianTranspose.cpp in Sources */,
 				BD40C1CD2358E434008FEDC3 /* Link.cpp in Sources */,
+				BD63DB1523E8BC1A0030E84A /* SolverBuilder.cpp in Sources */,
 				BD40C1CA2358E42B008FEDC3 /* Joint.cpp in Sources */,
+				BD63DB1123E8B46B0030E84A /* RobotHandler.cpp in Sources */,
 				BD40C1C32358D72A008FEDC3 /* MatrixFactory.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

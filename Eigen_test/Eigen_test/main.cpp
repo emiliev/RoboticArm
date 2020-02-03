@@ -17,6 +17,8 @@
 
 using namespace Eigen;
 
+using namespace std;
+
 int main(int argc, const char * argv[]) {
     
     dh_table table;
@@ -103,6 +105,43 @@ int main(int argc, const char * argv[]) {
     robot.loadConfig(table);
     
     
+    
+    
+//    while(true) {
+//        char symbol;
+//        std::cin >> symbol;
+//        switch (symbol) {
+//
+//        /// Forward kinematics
+//        case 'f':
+//        case 'F':
+//            robot.giveMeFullHM();
+//            break;
+//
+//        /// Inverse kinematics
+//        case 'i':
+//        case 'I':
+//
+//            break;
+//
+//        }
+//    }
+//
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 //    Forward kinematics
     robot.printFullTransformationMatrix();
 //    robot.printHomogenTransformationMatrix();
@@ -114,7 +153,7 @@ int main(int argc, const char * argv[]) {
 //    des << 60.0f, 0.0f, 330.0f, 0.0f, 0.0f, 0.0f;
 //    des << 76.0f, 88.0f, 244.0f, 0.0f , 0.0f , 0.0f;
 
-    AbstractSolver* pJpt = new JacobianPseudoInverse(des, robot);
+//    AbstractSolver* pJpt = new JacobianPseudoInverse(robot);
 //    AbstractSolver* pJpt = new JacobianTranspose(des, robot);
     
     
@@ -123,9 +162,9 @@ int main(int argc, const char * argv[]) {
 //    pJpt->setAdditionalParameter(speccfc);
     
     
-    pJpt->calculateData();
-    robot.printConfiguration();
-    delete pJpt;
+//    pJpt->calculateData(des);
+//    robot.printConfiguration();
+//    delete pJpt;
     
     return 0;
 }

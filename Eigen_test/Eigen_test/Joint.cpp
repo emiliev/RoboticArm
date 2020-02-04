@@ -12,6 +12,10 @@ void Joint::rotateJoint( const float& rot_angle ) {
     theta += rot_angle;
 }
 
+void Joint::setJoint(const float& rot_angle) {
+    theta = rot_angle;
+}
+
 void Joint::tranlsateJoint( float& displacement ) {
     d+=displacement;
 }

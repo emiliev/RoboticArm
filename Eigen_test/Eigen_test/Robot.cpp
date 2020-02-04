@@ -64,6 +64,25 @@ bool Robot::rotateJoint( unsigned int ind , float angle ) {
     return true;
 }
 
+bool Robot::rotateJoints(std::vector<float> angles) {
+    for(int index = 0; index < angles.size(); ++index) {
+        Joint& current_joint = jhandle[index];
+        if (current_joint.getJointType() == PRISMATIC) {
+            // There is no way to rotate a prismatic joint
+            continue;
+        }
+        current_joint.setJoint(angles[index]);
+        hmtx[index] = matrix_algo->calculateHTranslationMatrix(
+                                                                linkhadle[index].getZAxisRotationParametr_aplha(),
+                                                                linkhadle[index].getCommonNormalParametr_a(),
+                                                                jhandle[index].getDisplasmentParametr_d(),
+                                                               jhandle[index].getRotationParametr_theta());
+    }
+    caclulateFullTransormationMatrix();
+    
+    return true;
+}
+
 bool Robot::translateJoint( unsigned int ind , float displasment ) {
     if (ind > jhandle.size())
     {

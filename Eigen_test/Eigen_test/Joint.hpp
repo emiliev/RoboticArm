@@ -44,6 +44,7 @@ public:
     Joint(float d_in , float theta_in , JointT jt_in , std::string jname = "unnamed");
 
     void rotateJoint(const float& rot_angle);
+    void setJoint(const float& rot_angle);
     void tranlsateJoint(float & displacement);
     JointT getJointType() { return current_joint_type; }
     float giveMeVariableParametr();

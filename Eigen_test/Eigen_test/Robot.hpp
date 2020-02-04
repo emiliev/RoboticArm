@@ -43,6 +43,7 @@ public:
     bool loadConfig(const dh_table& tbl);
     void setOrigin(Eigen::Vector3f& newOrigin);
 
+    bool rotateJoints(std::vector<float> angles);
     bool rotateJoint(unsigned int ind ,float angle);
     bool translateJoint(unsigned int ind , float displasment);
     bool setJointVariable(unsigned int , float);
@@ -53,7 +54,7 @@ public:
     bool printFullTransformationMatrix();
     bool calculateNumberOfVariableParametrs();
     bool calculateJoint(unsigned int ind);
-
+    
     /************************************************************************/
     /* Help functions                                                       */
     /************************************************************************/

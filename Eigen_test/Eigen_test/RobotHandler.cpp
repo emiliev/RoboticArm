@@ -9,7 +9,7 @@
 #include "RobotHandler.hpp"
 
 
-
+#include <iostream>
 // TEMP HERE
 #include "DumpbedLeastSquares.hpp"
 #include "JacobianPseudoInverse.hpp"
@@ -23,7 +23,17 @@ RobotHandler::RobotHandler(std::shared_ptr<Robot> robot, std::shared_ptr<Abstrac
 RobotHandler::~RobotHandler() {
 }
 
+///TODO: Think for a better solution
 Eigen::Matrix4f RobotHandler::forwardKinematics() {
+    auto numJoints = robot->giveMeJoints().size();
+    std::vector<float> degrees;
+    for(int index = 0; index < numJoints; ++index) {
+        std::cout << "Enter angle: ";
+        float degree;
+        std::cin >> degree;
+        degrees.push_back(degree);
+    }
+    robot->rotateJoints(degrees);
     return robot->giveMeFullHM();
 }
 

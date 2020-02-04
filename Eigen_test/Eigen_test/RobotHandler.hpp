@@ -24,9 +24,9 @@ public:
     ~RobotHandler();
 
     Eigen::Matrix4f forwardKinematics();
-    
+    void setDesiredPosistion(Eigen::VectorXf& desired_position);
     void setSolver(std::shared_ptr<AbstractSolver> solver);
-    Eigen::VectorXf calculateInverseKinematics(Eigen::VectorXf& position);
+    Eigen::VectorXf calculateInverseKinematics();
 };
 
 

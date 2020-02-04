@@ -17,12 +17,12 @@ class SolverBuilder {
 public:
     static std::shared_ptr<AbstractSolver> createSolver(char symbol, std::shared_ptr<Robot> robot) {
         std::shared_ptr<AbstractSolver> solver;
-//        if (symbol == 'T') {
-//            solver = std::make_shared<JacobianTranspose>(robot);
-//        } else {
-//            solver = std::make_shared<JacobianPseudoInverse>(robot);
-//        }
-        return std::make_shared<JacobianTranspose>(robot);
+        if (symbol == 'T') {
+            solver = std::make_shared<JacobianTranspose>(robot);
+        } else {
+            solver = std::make_shared<JacobianPseudoInverse>(robot);
+        }
+        return solver;
     }
 };
 

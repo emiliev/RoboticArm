@@ -20,15 +20,22 @@ RobotHandler::RobotHandler(std::shared_ptr<Robot> robot, std::shared_ptr<Abstrac
     solver(solver) {
 }
 
+RobotHandler::~RobotHandler() {
+}
+
 Eigen::Matrix4f RobotHandler::forwardKinematics() {
     return robot->giveMeFullHM();
 }
 
-Eigen::VectorXf RobotHandler::calculateInverseKinematics(Eigen::VectorXf& position) {
-    return solver->calculateData(position);
+Eigen::VectorXf RobotHandler::calculateInverseKinematics() {
+    return solver->calculateData();
 }
 
 void RobotHandler::setSolver(std::shared_ptr<AbstractSolver> solver) {
     this->solver = solver;
+}
+
+void RobotHandler::setDesiredPosistion(Eigen::VectorXf &desired_position) {
+    this->solver->setDesiredPosistion(desired_position);
 }
  

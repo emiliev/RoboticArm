@@ -17,9 +17,6 @@ enum AlgorithmType
 {
     JACOBIANTRANSPOSE,
     JACOBIANPSEVDOINVERSE,
-    DUMPEDLEASTSQUARES,
-    SELECTIVEDUMPEDLEASTSQUARES,
-    CCD
 };
 
 //Abstarct class for all algorithm
@@ -28,7 +25,8 @@ class AbstractSolver
 public:
              AbstractSolver(){}
     virtual ~AbstractSolver(){}
-    virtual Eigen::VectorXf calculateData(Eigen::VectorXf& desired_position) = 0;
+    virtual Eigen::VectorXf calculateData() = 0;
+    virtual void setDesiredPosistion(Eigen::VectorXf& desired_position) = 0;
     virtual void setAdditionalParameter(float& add_in) = 0;
 };
 

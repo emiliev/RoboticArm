@@ -14,7 +14,8 @@
 #include "DumpbedLeastSquares.hpp"
 #include "JacobianPseudoInverse.hpp"
 #include "JacobianTranspose.hpp"
-
+#include "RobotHandler.hpp"
+#include "SolverBuilder.hpp"
 using namespace Eigen;
 
 using namespace std;
@@ -101,11 +102,13 @@ int main(int argc, const char * argv[]) {
 //    table.push_back(gripper);
 
     auto origin = Eigen::Vector3f(0.0f, 0.0f, 0.0f);
-    Robot robot(origin);
-    robot.loadConfig(table);
+    std::shared_ptr<Robot> robot = std::make_shared<Robot>(origin);
+    robot->loadConfig(table);
     
+    auto solver = SolverBuilder::createSolver('P', robot);
+    RobotHandler handler(robot, solver);
     
-    
+    std::cout<<handler.forwardKinematics();
     
 //    while(true) {
 //        char symbol;
@@ -143,13 +146,16 @@ int main(int argc, const char * argv[]) {
     
     
 //    Forward kinematics
-    robot.printFullTransformationMatrix();
+//    robot->printFullTransformationMatrix();
 //    robot.printHomogenTransformationMatrix();
 
     
     // Inverse kinematics
     VectorXf des(6);
     des << -147.129 , 14.9 , 350.294 , 0.0f , 0.0f , 0.0f;
+    handler.setDesiredPosistion(des);
+    handler.calculateInverseKinematics();
+    robot->printConfiguration();
 //    des << 60.0f, 0.0f, 330.0f, 0.0f, 0.0f, 0.0f;
 //    des << 76.0f, 88.0f, 244.0f, 0.0f , 0.0f , 0.0f;
 

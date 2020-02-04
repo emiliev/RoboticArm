@@ -11,7 +11,7 @@
 #include "Robot.hpp"
 #include <iostream>
 
-JacobianTranspose::JacobianTranspose(Robot& robot):
+JacobianTranspose::JacobianTranspose(std::shared_ptr<Robot> robot):
         mtxinstance(MatrixFactory::getInstance()),
         _robot(robot) {
     _desired_position = Eigen::VectorXf(6);
@@ -22,10 +22,13 @@ void JacobianTranspose::setAdditionalParameter(float& add_in ) {
     lamda_coefficent = add_in;
 }
 
-Eigen::VectorXf JacobianTranspose::calculateData(Eigen::VectorXf& desired_position) {
+void JacobianTranspose::setDesiredPosistion(Eigen::VectorXf&  desired_position) {
+    this->_desired_position = desired_position;
+}
+
+Eigen::VectorXf JacobianTranspose::calculateData() {
     //Result vector
-    _desired_position = desired_position;
-    Eigen::VectorXf delta_theta(_robot.giveMeMatrixHolder().size());
+    Eigen::VectorXf delta_theta(_robot->giveMeMatrixHolder().size());
     //Vector for delta moving in space
     Eigen::VectorXf delta_translation(6);
 
@@ -39,11 +42,13 @@ Eigen::VectorXf JacobianTranspose::calculateData(Eigen::VectorXf& desired_positi
     float epsilon = 0.1f;
 
     for (;;) {
-        jac->calculateJacobian(_robot.giveMeMatrixHolder(),_robot.giveMeJoints(),_robot.giveMeFullHM());
+        jac->calculateJacobian(_robot->giveMeMatrixHolder(),
+                               _robot->giveMeJoints(),
+                               _robot->giveMeFullHM());
         //calculation delta
-        current_position << _robot.giveMeFullHM()(0,3) ,    //X
-                            _robot.giveMeFullHM()(1,3) ,    //Y
-                            _robot.giveMeFullHM()(2,3) ,    //Y
+        current_position << _robot->giveMeFullHM()(0,3) ,    //X
+                            _robot->giveMeFullHM()(1,3) ,    //Y
+                            _robot->giveMeFullHM()(2,3) ,    //Y
                             0.0f,
                             0.0f,
                             0.0f;
@@ -82,14 +87,14 @@ Eigen::VectorXf JacobianTranspose::calculateData(Eigen::VectorXf& desired_positi
 }
 
 void JacobianTranspose::updateJoints(Eigen::VectorXf & delta_theta) {
-    JointHandler& _j = _robot.giveMeJoints();
+    JointHandler& _j = _robot->giveMeJoints();
 
     for (int i = 0 ; i < delta_theta.size() ; i++) {
         //new var = old var + delta var
         float old = _j[i].giveMeVariableParametr();
         float delta = delta_theta[i];
         float res = delta + old;
-        _robot.setJointVariable(i,res);
+        _robot->setJointVariable(i,res);
     }
 }
 

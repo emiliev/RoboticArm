@@ -20,11 +20,12 @@ class JacobianTranspose : public AbstractSolver
     float lamda_coefficent;
     Eigen::VectorXf _desired_position;
     Eigen::VectorXf current_position;
-    Robot& _robot;
+    std::shared_ptr<Robot> _robot;
 
 public:
-    JacobianTranspose(Robot& robot);
-    Eigen::VectorXf calculateData(Eigen::VectorXf& desired_position);
+    void setDesiredPosistion(Eigen::VectorXf&  desired_position);
+    JacobianTranspose(std::shared_ptr<Robot> robot);
+    Eigen::VectorXf calculateData();
     void setAdditionalParameter(float& add_in);
     void updateJoints(Eigen::VectorXf& delta_theta);
 };

@@ -16,13 +16,13 @@
 class JacobianPseudoInverse : public AbstractSolver {
     MatrixFactory* mtxinstance;
     Eigen::VectorXf _desired_position;
-    Robot& _robot;
+    std::shared_ptr<Robot> _robot;
     Eigen::VectorXf current_position;
 
 public:
-    JacobianPseudoInverse(Robot& robot);
-
-    Eigen::VectorXf calculateData(Eigen::VectorXf& desired_position);
+    JacobianPseudoInverse(std::shared_ptr<Robot> robot);
+    void setDesiredPosistion(Eigen::VectorXf& desired_position);
+    Eigen::VectorXf calculateData();
     void setAdditionalParameter(float& add_in){ }
     void updateJoints(Eigen::VectorXf& delta_theta);
 };

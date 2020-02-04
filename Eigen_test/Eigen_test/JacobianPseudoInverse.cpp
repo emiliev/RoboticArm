@@ -11,22 +11,23 @@
 #include <iostream>
 #include <Eigen/StdVector>
 
-JacobianPseudoInverse::JacobianPseudoInverse(Robot& robot):
+JacobianPseudoInverse::JacobianPseudoInverse(std::shared_ptr<Robot> robot):
     mtxinstance(MatrixFactory::getInstance()),
-//    _desired_position(Eigen::VectorXf(6)),
     _robot(robot) {
-        _desired_position = Eigen::VectorXf(6);
-//        re
-//        _desired_position = Vector
-        current_position.resize(6);
+
+    _desired_position = Eigen::VectorXf(6);
+    current_position.resize(6);
 }
 
-Eigen::VectorXf JacobianPseudoInverse::calculateData(Eigen::VectorXf& desired_position) {
+void JacobianPseudoInverse::setDesiredPosistion(Eigen::VectorXf& desired_position) {
+    this->_desired_position = desired_position;
+}
+
+Eigen::VectorXf JacobianPseudoInverse::calculateData() {
     //Result vector
-    Eigen::VectorXf delta_theta(_robot.giveMeMatrixHolder().size());
+    Eigen::VectorXf delta_theta(_robot->giveMeMatrixHolder().size());
     //Vector for delta moving in space
     Eigen::VectorXf delta_translation(6);
-
     Eigen::VectorXf _temp = _desired_position;
 
     Jacobian* jac = Jacobian::getInstance();
@@ -37,11 +38,13 @@ Eigen::VectorXf JacobianPseudoInverse::calculateData(Eigen::VectorXf& desired_po
     
     for (;;)
     {
-        jac->calculateJacobian(_robot.giveMeMatrixHolder(),_robot.giveMeJoints(),_robot.giveMeFullHM());
+        jac->calculateJacobian(_robot->giveMeMatrixHolder(),
+                               _robot->giveMeJoints(),
+                               _robot->giveMeFullHM());
         //calculation delta
-        current_position << _robot.giveMeFullHM()(0,3) ,    //X
-                            _robot.giveMeFullHM()(1,3) ,    //Y
-                            _robot.giveMeFullHM()(2,3) ,    //Z
+        current_position << _robot->giveMeFullHM()(0,3) ,    //X
+                            _robot->giveMeFullHM()(1,3) ,    //Y
+                            _robot->giveMeFullHM()(2,3) ,    //Z
                             0.0f,                           //Orientation
                             0.0f,                           //Orientation
                             0.0f;                           //Orientation
@@ -68,12 +71,12 @@ Eigen::VectorXf JacobianPseudoInverse::calculateData(Eigen::VectorXf& desired_po
 }
 
 void JacobianPseudoInverse::updateJoints(Eigen::VectorXf& delta_theta ) {
-    JointHandler & _j = _robot.giveMeJoints();
+    JointHandler & _j = _robot->giveMeJoints();
 
     for (int i = 0 ; i < delta_theta.size() ; i++) {
         //TODO ADD CONSTRAINTS
         //new var = old var + delta var
         float res = delta_theta[i] + _j[i].giveMeVariableParametr();
-        _robot.setJointVariable(i,res);
+        _robot->setJointVariable(i, res);
     }
 }

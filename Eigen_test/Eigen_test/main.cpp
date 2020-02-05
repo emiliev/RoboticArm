@@ -11,18 +11,36 @@
 #include "SharedTypes.h"
 #include <math.h>
 #include "Robot.hpp"
-#include "DumpbedLeastSquares.hpp"
-#include "JacobianPseudoInverse.hpp"
-#include "JacobianTranspose.hpp"
-#include "RobotHandler.hpp"
 #include "SolverBuilder.hpp"
+#include "CommandBuilder.hpp"
+
 using namespace Eigen;
 
 using namespace std;
 
-int main(int argc, const char * argv[]) {
+///TODO: Move to Another file and rename to SerialCommunicator ?
+#include "CalculationObserver.hpp"
+#include "CalculationManager.hpp"
+class Test: public CalculationObserver {
+public:
+    void notify(std::vector<float> updates) {
+        for (std::vector<float>::iterator it = updates.begin(); it != updates.end(); ++it) {
+            std::cout << (*it) << "\n";
 
-    dh_table table;
+        }
+    }
+};
+
+
+void printMenu() {
+    cout << "/t Menu /t \n" <<
+        "i(I) - Inverse Kinematics\n" <<
+        "f(F) - Forward Kinematics\n" <<
+        "q(Q) - Quit\n" <<
+        "h(H) - Show menu\n";
+}
+
+std::shared_ptr<Robot> createRobot() {
     float thita0 = 0;
     float thita1 = 90;
     float thita2 = -90;
@@ -40,6 +58,7 @@ int main(int argc, const char * argv[]) {
     dh_parametrs joint2(    5.3, alpha2, -11.5,   thita2, JointT::REVOLUTE, "Joint2");
     dh_parametrs joint3(    5.1, alpha3, 117.7, thita3, JointT::REVOLUTE, "Joint3");
     dh_parametrs joint4(    62.5, alpha4, -3.4,  thita4, JointT::REVOLUTE, "Joint4");
+    dh_table table;
     table.push_back(base_joint);
     table.push_back(joint1);
     table.push_back(joint2);
@@ -49,11 +68,22 @@ int main(int argc, const char * argv[]) {
     auto origin = Eigen::Vector3f(0.0f, 0.0f, 0.0f);
     std::shared_ptr<Robot> robot = std::make_shared<Robot>(origin);
     robot->loadConfig(table);
+    return robot;
+}
 
-    auto solver = SolverBuilder::createSolver('P', robot);
-    RobotHandler handler(robot, solver);
-    
+int main(int argc, const char * argv[]) {
+
+    std::shared_ptr<Robot> robot = createRobot();
+    cout << "Choose inverse kinematics method, JacobianPseudoinverse(P) or JacobianTranspose(I): ";
+    char methodSymbol;
+    cin >> methodSymbol;
+    auto solver = SolverBuilder::createSolver(methodSymbol, robot);
+
     robot->printFullTransformationMatrix();
+    std::shared_ptr<CommandManager> manager = CommandManagerBuilder::createManager(robot, solver);
+    
+    std::shared_ptr<CalculationObserver> testNotifier = std::make_shared<Test>();
+    CalculationManager::instance().addObserver(testNotifier);
     bool isRunning = true;
     while(isRunning) {
         char symbol;
@@ -64,24 +94,21 @@ int main(int argc, const char * argv[]) {
         case 'f':
         case 'F':
             {
-                handler.forwardKinematics();
-                robot->printFullTransformationMatrix();
+                manager->executeCommand("forward_kinemastics_command");
                 break;
             }
         /// Inverse kinematics
         case 'i':
         case 'I':
             {
-                VectorXf des(6);
-                float posX, posY, posZ;
-                std::cout<< "Enter position (X, Y, Z): ";
-                std::cin >> posX >> posY >> posZ;
-                std::cout<< "Calculating ... \n";
-                des << posX, posY, posZ, 0.0, 0.0, 0.0;
-                //  -147.129 , 14.9 , 350.294
-                handler.setDesiredPosistion(des);
-                handler.calculateInverseKinematics();
-                robot->printConfiguration();
+                manager->executeCommand("inverse_kinematics_command");
+                // -147.129 14.9 350.294
+                break;
+            }
+        case 'h':
+        case 'H':
+            {
+                printMenu();
                 break;
             }
         case 'q' :

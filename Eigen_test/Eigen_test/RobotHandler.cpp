@@ -11,9 +11,9 @@
 
 #include <iostream>
 // TEMP HERE
-#include "DumpbedLeastSquares.hpp"
-#include "JacobianPseudoInverse.hpp"
-#include "JacobianTranspose.hpp"
+//#include "DumpbedLeastSquares.hpp"
+//#include "JacobianPseudoInverse.hpp"
+//#include "JacobianTranspose.hpp"
 
 RobotHandler::RobotHandler(std::shared_ptr<Robot> robot, std::shared_ptr<AbstractSolver> solver):
     robot(robot),

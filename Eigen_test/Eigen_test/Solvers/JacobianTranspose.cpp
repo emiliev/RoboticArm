@@ -54,9 +54,6 @@ Eigen::VectorXf JacobianTranspose::calculateData() {
                             0.0f;
                             
         delta_translation = _desired_position - current_position;
-//        std::cout<<"Current position"<<std::endl<<current_position<<std::endl;
-//        std::cout<<"Desired position"<<std::endl<<_desired_position<<std::endl;
-//        std::cout<<"Delta translation "<<std::endl<<delta_translation<<std::endl;
         //compare delta with desired accuracy
         float n = delta_translation.norm();
         if (n < epsilon) {
@@ -78,24 +75,25 @@ Eigen::VectorXf JacobianTranspose::calculateData() {
 
 
         delta_theta = lamda_coefficent * jac->getJacobian().transpose() * delta_translation;
-
-//        std::cout<<"Delta theta"<<std::endl<<delta_theta<<std::endl;
         updateJoints(delta_theta);
     }
 
+    /// Send notification
+    _robot->notifyUpdatedJoints();
     return _temp;
 }
 
 void JacobianTranspose::updateJoints(Eigen::VectorXf & delta_theta) {
-    JointHandler& _j = _robot->giveMeJoints();
+    JointHandler& joints = _robot->giveMeJoints();
 
     for (int i = 0 ; i < delta_theta.size() ; i++) {
         //new var = old var + delta var
-        float old = _j[i].giveMeVariableParametr();
+        float old = joints[i].giveMeVariableParametr();
         float delta = delta_theta[i];
         float res = delta + old;
         _robot->setJointVariable(i,res);
     }
+    _robot->caclulateFullTransormationMatrix();
 }
 
 

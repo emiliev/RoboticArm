@@ -49,10 +49,7 @@ Eigen::VectorXf JacobianPseudoInverse::calculateData() {
                             0.0f,                           //Orientation
                             0.0f;                           //Orientation
 
-//        std::cout<<"Current position"<<std::endl<<current_position<<std::endl;
-//        std::cout<<"Desired position"<<std::endl<<_desired_position<<std::endl;
         delta_translation = _desired_position - current_position;
-//        std::cout<<"Delta position"<<std::endl<<delta_translation<<std::endl;
 
         //compare delta with desired accuracy
         float n = delta_translation.norm();
@@ -62,21 +59,20 @@ Eigen::VectorXf JacobianPseudoInverse::calculateData() {
         }
         //Algo
         delta_theta = jac->psevdoInverse() * delta_translation;
-        
-//        std::cout<<"Delta theta"<<std::endl<<delta_theta<<std::endl;
         updateJoints(delta_theta);
     }
-
+    _robot->notifyUpdatedJoints();
     return _temp;
 }
 
 void JacobianPseudoInverse::updateJoints(Eigen::VectorXf& delta_theta ) {
-    JointHandler & _j = _robot->giveMeJoints();
+    JointHandler& joints = _robot->giveMeJoints();
 
     for (int i = 0 ; i < delta_theta.size() ; i++) {
         //TODO ADD CONSTRAINTS
         //new var = old var + delta var
-        float res = delta_theta[i] + _j[i].giveMeVariableParametr();
+        float res = delta_theta[i] + joints[i].giveMeVariableParametr();
         _robot->setJointVariable(i, res);
     }
+    _robot->caclulateFullTransormationMatrix();
 }

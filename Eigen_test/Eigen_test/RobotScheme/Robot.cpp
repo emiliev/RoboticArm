@@ -7,8 +7,9 @@
 //
 
 #include "Robot.hpp"
-#include "MatrixFactory.hpp"
 #include <iostream>
+#include "MatrixFactory.hpp"
+#include "CalculationManager.hpp"
 
 bool Robot::loadConfig( const dh_table& tbl ) {
     unsigned int sz = tbl.size();
@@ -137,7 +138,6 @@ bool Robot::caclulateFullTransormationMatrix() {
     for (unsigned int i = 0 ; i < hmtx.size() ; i++)
     {
         Eigen::Matrix4f _temp = from_i_1_to_i;
-//        std::cout << hmtx[i] << std::endl;
         from_i_1_to_i = _temp * hmtx[i];
     }
 
@@ -150,13 +150,13 @@ bool Robot::printFullTransformationMatrix() {
 }
 
 bool Robot::calculateNumberOfVariableParametrs() {
-    if(jhandle.empty())
+    if(jhandle.empty()) {
         return false;
+    }
 
-    for (unsigned int i = 0 ; i < jhandle.size() ; ++i)
-    {
-        if (jhandle[i].getJointType() != CONSTANTJOINT)
-        {
+    number_of_var_parameters = 0;
+    for (unsigned int i = 0 ; i < jhandle.size() ; ++i) {
+        if (jhandle[i].getJointType() != CONSTANTJOINT) {
             number_of_var_parameters++;
         }
     }
@@ -165,10 +165,7 @@ bool Robot::calculateNumberOfVariableParametrs() {
 }
 
 bool Robot::setJointVariable(unsigned int ind,float new_var) {
-    bool retval = true;
-
-    switch(jhandle[ind].getJointType())
-    {
+    switch(jhandle[ind].getJointType()) {
     case REVOLUTE:
         jhandle[ind].getRotationParametr_theta() = new_var;
         break;
@@ -176,15 +173,10 @@ bool Robot::setJointVariable(unsigned int ind,float new_var) {
         jhandle[ind].getDisplasmentParametr_d() = new_var;
         break;
     default:
-        retval = false;
+        break;
     }
 
-    if (retval)
-    {
-        calculateJoint(ind);
-    }
-
-    return retval;
+    return calculateJoint(ind);
 }
 
 bool Robot::calculateJoint( unsigned int ind ) {
@@ -197,8 +189,6 @@ bool Robot::calculateJoint( unsigned int ind ) {
                                                             jhandle[ind].getDisplasmentParametr_d(),
                                                             jhandle[ind].getRotationParametr_theta()
                                                          );
-
-    caclulateFullTransormationMatrix();
     return true;
 }
 
@@ -230,4 +220,15 @@ void Robot::printConfiguration() {
     std::cout<<"X : "<<x_pos<<std::endl;
     std::cout<<"Y : "<<y_pos<<std::endl;
     std::cout<<"Z : "<<z_pos<<std::endl;
+}
+
+void Robot::notifyUpdatedJoints() {
+    std::vector<float> updates;
+    for(std::vector<Joint>::iterator it = jhandle.begin(); it != jhandle.end(); ++it) {
+        auto value = (*it).giveMeVariableParametr();
+        updates.push_back(value);
+    }
+    
+    auto instance = CalculationManager::instance();
+    instance.notify(updates);
 }

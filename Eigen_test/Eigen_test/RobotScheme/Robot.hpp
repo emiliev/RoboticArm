@@ -54,7 +54,7 @@ public:
     bool printFullTransformationMatrix();
     bool calculateNumberOfVariableParametrs();
     bool calculateJoint(unsigned int ind);
-    
+    void notifyUpdatedJoints();
     /************************************************************************/
     /* Help functions                                                       */
     /************************************************************************/

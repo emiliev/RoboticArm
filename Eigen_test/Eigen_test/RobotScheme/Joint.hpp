@@ -50,7 +50,7 @@ public:
     float giveMeVariableParametr();
 
     float& getDisplasmentParametr_d(){ return d; }
-    float & getRotationParametr_theta(){ return theta; }
+    float& getRotationParametr_theta(){ return theta; }
 
     std::string& getJointName(){ return joint_name; }
     void setGlobalPosition(const Eigen::Vector3f & vec);

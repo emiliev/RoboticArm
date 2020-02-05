@@ -13,15 +13,13 @@
 #include <Eigen/Dense>
 #include "MatrixFactory.hpp"
 
-enum AlgorithmType
-{
+enum AlgorithmType {
     JACOBIANTRANSPOSE,
     JACOBIANPSEVDOINVERSE,
 };
 
 //Abstarct class for all algorithm
-class AbstractSolver
-{
+class AbstractSolver {
 public:
              AbstractSolver(){}
     virtual ~AbstractSolver(){}

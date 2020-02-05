@@ -10,7 +10,6 @@
 		BD34501F235AF4C200D41ED0 /* JacobianPseudoInverse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD34501D235AF4C200D41ED0 /* JacobianPseudoInverse.cpp */; };
 		BD345022235AF65800D41ED0 /* JacobianTranspose.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD345020235AF65800D41ED0 /* JacobianTranspose.cpp */; };
 		BD40C1B52358BB40008FEDC3 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD40C1B42358BB40008FEDC3 /* main.cpp */; };
-		BD40C1BD2358D59B008FEDC3 /* AbstractSolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD40C1BB2358D59A008FEDC3 /* AbstractSolver.cpp */; };
 		BD40C1C02358D651008FEDC3 /* DumpbedLeastSquares.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD40C1BE2358D651008FEDC3 /* DumpbedLeastSquares.cpp */; };
 		BD40C1C32358D72A008FEDC3 /* MatrixFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD40C1C12358D72A008FEDC3 /* MatrixFactory.cpp */; };
 		BD40C1C62358D8CC008FEDC3 /* Robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD40C1C42358D8CC008FEDC3 /* Robot.cpp */; };
@@ -18,7 +17,11 @@
 		BD40C1CD2358E434008FEDC3 /* Link.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD40C1CB2358E434008FEDC3 /* Link.cpp */; };
 		BD40C1D12359CEE8008FEDC3 /* Jacobian.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD40C1CF2359CEE8008FEDC3 /* Jacobian.cpp */; };
 		BD63DB1123E8B46B0030E84A /* RobotHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD63DB0F23E8B46B0030E84A /* RobotHandler.cpp */; };
-		BD63DB1523E8BC1A0030E84A /* SolverBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD63DB1323E8BC1A0030E84A /* SolverBuilder.cpp */; };
+		E5A0ECDF23EB0F900007EF16 /* ForwardKinematicsCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A0ECDD23EB0F900007EF16 /* ForwardKinematicsCommand.cpp */; };
+		E5A0ECE223EB11E10007EF16 /* InverseKinematicsCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A0ECE023EB11E10007EF16 /* InverseKinematicsCommand.cpp */; };
+		E5A0ECE523EB25C50007EF16 /* CommandManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A0ECE323EB25C50007EF16 /* CommandManager.cpp */; };
+		E5A0ECFB23EB34E50007EF16 /* CommandBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A0ECF923EB34E50007EF16 /* CommandBuilder.cpp */; };
+		E5A0ED0123EB61540007EF16 /* CalculationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5A0ECFF23EB61540007EF16 /* CalculationManager.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,7 +43,6 @@
 		BD345021235AF65800D41ED0 /* JacobianTranspose.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = JacobianTranspose.hpp; sourceTree = "<group>"; };
 		BD40C1B12358BB40008FEDC3 /* Eigen_test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Eigen_test; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD40C1B42358BB40008FEDC3 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		BD40C1BB2358D59A008FEDC3 /* AbstractSolver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AbstractSolver.cpp; sourceTree = "<group>"; };
 		BD40C1BC2358D59A008FEDC3 /* AbstractSolver.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AbstractSolver.hpp; sourceTree = "<group>"; };
 		BD40C1BE2358D651008FEDC3 /* DumpbedLeastSquares.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DumpbedLeastSquares.cpp; sourceTree = "<group>"; };
 		BD40C1BF2358D651008FEDC3 /* DumpbedLeastSquares.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DumpbedLeastSquares.hpp; sourceTree = "<group>"; };
@@ -58,8 +60,19 @@
 		BD40C1D02359CEE8008FEDC3 /* Jacobian.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Jacobian.hpp; sourceTree = "<group>"; };
 		BD63DB0F23E8B46B0030E84A /* RobotHandler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RobotHandler.cpp; sourceTree = "<group>"; };
 		BD63DB1023E8B46B0030E84A /* RobotHandler.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RobotHandler.hpp; sourceTree = "<group>"; };
-		BD63DB1323E8BC1A0030E84A /* SolverBuilder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SolverBuilder.cpp; sourceTree = "<group>"; };
 		BD63DB1423E8BC1A0030E84A /* SolverBuilder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SolverBuilder.hpp; sourceTree = "<group>"; };
+		E5A0ECDB23EB0F4D0007EF16 /* Command.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Command.hpp; sourceTree = "<group>"; };
+		E5A0ECDD23EB0F900007EF16 /* ForwardKinematicsCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ForwardKinematicsCommand.cpp; sourceTree = "<group>"; };
+		E5A0ECDE23EB0F900007EF16 /* ForwardKinematicsCommand.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ForwardKinematicsCommand.hpp; sourceTree = "<group>"; };
+		E5A0ECE023EB11E10007EF16 /* InverseKinematicsCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = InverseKinematicsCommand.cpp; sourceTree = "<group>"; };
+		E5A0ECE123EB11E10007EF16 /* InverseKinematicsCommand.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = InverseKinematicsCommand.hpp; sourceTree = "<group>"; };
+		E5A0ECE323EB25C50007EF16 /* CommandManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CommandManager.cpp; sourceTree = "<group>"; };
+		E5A0ECE423EB25C50007EF16 /* CommandManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CommandManager.hpp; sourceTree = "<group>"; };
+		E5A0ECF923EB34E50007EF16 /* CommandBuilder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CommandBuilder.cpp; sourceTree = "<group>"; };
+		E5A0ECFA23EB34E50007EF16 /* CommandBuilder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CommandBuilder.hpp; sourceTree = "<group>"; };
+		E5A0ECFF23EB61540007EF16 /* CalculationManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CalculationManager.cpp; sourceTree = "<group>"; };
+		E5A0ED0023EB61540007EF16 /* CalculationManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CalculationManager.hpp; sourceTree = "<group>"; };
+		E5A0ED0323EB69730007EF16 /* CalculationObserver.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CalculationObserver.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,12 +106,54 @@
 			isa = PBXGroup;
 			children = (
 				BD40C1B42358BB40008FEDC3 /* main.cpp */,
-				BD40C1BB2358D59A008FEDC3 /* AbstractSolver.cpp */,
-				BD40C1BC2358D59A008FEDC3 /* AbstractSolver.hpp */,
-				BD40C1BE2358D651008FEDC3 /* DumpbedLeastSquares.cpp */,
-				BD40C1BF2358D651008FEDC3 /* DumpbedLeastSquares.hpp */,
+				E5A0ECE723EB2DA70007EF16 /* Solvers */,
+				E5A0ECE823EB2DE50007EF16 /* RobotScheme */,
+				E5A0ECE923EB2E570007EF16 /* Observer */,
+				BD63DB0F23E8B46B0030E84A /* RobotHandler.cpp */,
+				BD63DB1023E8B46B0030E84A /* RobotHandler.hpp */,
+				E5A0ECE623EB2D4E0007EF16 /* Commands */,
+			);
+			path = Eigen_test;
+			sourceTree = "<group>";
+		};
+		E5A0ECE623EB2D4E0007EF16 /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				E5A0ECDB23EB0F4D0007EF16 /* Command.hpp */,
+				E5A0ECDD23EB0F900007EF16 /* ForwardKinematicsCommand.cpp */,
+				E5A0ECDE23EB0F900007EF16 /* ForwardKinematicsCommand.hpp */,
+				E5A0ECE023EB11E10007EF16 /* InverseKinematicsCommand.cpp */,
+				E5A0ECE123EB11E10007EF16 /* InverseKinematicsCommand.hpp */,
+				E5A0ECE323EB25C50007EF16 /* CommandManager.cpp */,
+				E5A0ECE423EB25C50007EF16 /* CommandManager.hpp */,
+				E5A0ECF923EB34E50007EF16 /* CommandBuilder.cpp */,
+				E5A0ECFA23EB34E50007EF16 /* CommandBuilder.hpp */,
+			);
+			path = Commands;
+			sourceTree = "<group>";
+		};
+		E5A0ECE723EB2DA70007EF16 /* Solvers */ = {
+			isa = PBXGroup;
+			children = (
+				BD40C1CF2359CEE8008FEDC3 /* Jacobian.cpp */,
+				BD40C1D02359CEE8008FEDC3 /* Jacobian.hpp */,
 				BD40C1C12358D72A008FEDC3 /* MatrixFactory.cpp */,
 				BD40C1C22358D72A008FEDC3 /* MatrixFactory.hpp */,
+				BD40C1BE2358D651008FEDC3 /* DumpbedLeastSquares.cpp */,
+				BD40C1BC2358D59A008FEDC3 /* AbstractSolver.hpp */,
+				BD40C1BF2358D651008FEDC3 /* DumpbedLeastSquares.hpp */,
+				BD34501D235AF4C200D41ED0 /* JacobianPseudoInverse.cpp */,
+				BD34501E235AF4C200D41ED0 /* JacobianPseudoInverse.hpp */,
+				BD345020235AF65800D41ED0 /* JacobianTranspose.cpp */,
+				BD345021235AF65800D41ED0 /* JacobianTranspose.hpp */,
+				BD63DB1423E8BC1A0030E84A /* SolverBuilder.hpp */,
+			);
+			path = Solvers;
+			sourceTree = "<group>";
+		};
+		E5A0ECE823EB2DE50007EF16 /* RobotScheme */ = {
+			isa = PBXGroup;
+			children = (
 				BD40C1C42358D8CC008FEDC3 /* Robot.cpp */,
 				BD40C1C52358D8CC008FEDC3 /* Robot.hpp */,
 				BD40C1C72358E3F5008FEDC3 /* RobotType.h */,
@@ -107,18 +162,18 @@
 				BD40C1CB2358E434008FEDC3 /* Link.cpp */,
 				BD40C1CC2358E434008FEDC3 /* Link.hpp */,
 				BD40C1CE2359B107008FEDC3 /* SharedTypes.h */,
-				BD40C1CF2359CEE8008FEDC3 /* Jacobian.cpp */,
-				BD40C1D02359CEE8008FEDC3 /* Jacobian.hpp */,
-				BD34501D235AF4C200D41ED0 /* JacobianPseudoInverse.cpp */,
-				BD34501E235AF4C200D41ED0 /* JacobianPseudoInverse.hpp */,
-				BD345020235AF65800D41ED0 /* JacobianTranspose.cpp */,
-				BD345021235AF65800D41ED0 /* JacobianTranspose.hpp */,
-				BD63DB0F23E8B46B0030E84A /* RobotHandler.cpp */,
-				BD63DB1023E8B46B0030E84A /* RobotHandler.hpp */,
-				BD63DB1323E8BC1A0030E84A /* SolverBuilder.cpp */,
-				BD63DB1423E8BC1A0030E84A /* SolverBuilder.hpp */,
 			);
-			path = Eigen_test;
+			path = RobotScheme;
+			sourceTree = "<group>";
+		};
+		E5A0ECE923EB2E570007EF16 /* Observer */ = {
+			isa = PBXGroup;
+			children = (
+				E5A0ECFF23EB61540007EF16 /* CalculationManager.cpp */,
+				E5A0ED0023EB61540007EF16 /* CalculationManager.hpp */,
+				E5A0ED0323EB69730007EF16 /* CalculationObserver.hpp */,
+			);
+			path = Observer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -179,16 +234,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD40C1C62358D8CC008FEDC3 /* Robot.cpp in Sources */,
-				BD40C1BD2358D59B008FEDC3 /* AbstractSolver.cpp in Sources */,
+				E5A0ECE523EB25C50007EF16 /* CommandManager.cpp in Sources */,
 				BD34501F235AF4C200D41ED0 /* JacobianPseudoInverse.cpp in Sources */,
 				BD40C1B52358BB40008FEDC3 /* main.cpp in Sources */,
 				BD40C1C02358D651008FEDC3 /* DumpbedLeastSquares.cpp in Sources */,
 				BD40C1D12359CEE8008FEDC3 /* Jacobian.cpp in Sources */,
 				BD345022235AF65800D41ED0 /* JacobianTranspose.cpp in Sources */,
+				E5A0ECFB23EB34E50007EF16 /* CommandBuilder.cpp in Sources */,
+				E5A0ECE223EB11E10007EF16 /* InverseKinematicsCommand.cpp in Sources */,
 				BD40C1CD2358E434008FEDC3 /* Link.cpp in Sources */,
-				BD63DB1523E8BC1A0030E84A /* SolverBuilder.cpp in Sources */,
+				E5A0ECDF23EB0F900007EF16 /* ForwardKinematicsCommand.cpp in Sources */,
 				BD40C1CA2358E42B008FEDC3 /* Joint.cpp in Sources */,
 				BD63DB1123E8B46B0030E84A /* RobotHandler.cpp in Sources */,
+				E5A0ED0123EB61540007EF16 /* CalculationManager.cpp in Sources */,
 				BD40C1C32358D72A008FEDC3 /* MatrixFactory.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

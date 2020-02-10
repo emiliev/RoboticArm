@@ -33,7 +33,7 @@ class Robot {
 /************************************************************************/
 /* Full transformation matrix (from i frame to 0 frame)                 */
 /************************************************************************/
-    Eigen::Matrix4f        from_i_1_to_i;
+    Eigen::Matrix4f from_i_1_to_i;
 /************************************************************************/
 /* Matrix factory (not pattern)                                         */
 /************************************************************************/
@@ -58,8 +58,7 @@ public:
     /************************************************************************/
     /* Help functions                                                       */
     /************************************************************************/
-    Eigen::Matrix4f & giveMeFullHM()
-    {
+    Eigen::Matrix4f & giveMeFullHM() {
         return from_i_1_to_i;
     }
 
@@ -68,13 +67,11 @@ public:
         return this;
     }
 
-    JointHandler& giveMeJoints()
-    {
+    JointHandler& giveMeJoints() {
         return jhandle;
     }
 
-    HomMatrixHolder & giveMeMatrixHolder()
-    {
+    HomMatrixHolder & giveMeMatrixHolder() {
         return  hmtx;
     }
 

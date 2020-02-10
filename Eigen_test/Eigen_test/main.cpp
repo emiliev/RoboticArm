@@ -7,26 +7,54 @@
 //
 
 #include <iostream>
+//#include <fstream>
 #include <Eigen/Dense>
 #include "SharedTypes.h"
 #include <math.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include "Robot.hpp"
 #include "SolverBuilder.hpp"
 #include "CommandBuilder.hpp"
 
 using namespace Eigen;
-
 using namespace std;
 
 ///TODO: Move to Another file and rename to SerialCommunicator ?
 #include "CalculationObserver.hpp"
 #include "CalculationManager.hpp"
+//#include <serial.h>
 class Test: public CalculationObserver {
+public:
+    void notify(std::vector<float> updates) {
+
+    int outputFD = open("/dev/cu.usbserial-1410", O_RDWR);
+    if (outputFD == -1) {
+        fprintf(stderr, "Stream was unable to open!\n");
+        return;
+    }
+
+    for (std::vector<float>::iterator it = updates.begin(); it != updates.end(); ++it) {
+        std::cout << (*it) << "\n";
+
+        write(outputFD, "Hello", 5);
+        char buf[13];
+        read(outputFD, buf, 13);
+        puts(buf);
+
+//        arduinoStream << (*it);
+    }
+
+    close(outputFD);
+    }
+};
+
+
+class Logger: public CalculationObserver {
 public:
     void notify(std::vector<float> updates) {
         for (std::vector<float>::iterator it = updates.begin(); it != updates.end(); ++it) {
             std::cout << (*it) << "\n";
-
         }
     }
 };
@@ -82,7 +110,7 @@ int main(int argc, const char * argv[]) {
     robot->printFullTransformationMatrix();
     std::shared_ptr<CommandManager> manager = CommandManagerBuilder::createManager(robot, solver);
     
-    std::shared_ptr<CalculationObserver> testNotifier = std::make_shared<Test>();
+    std::shared_ptr<CalculationObserver> testNotifier = std::make_shared<Logger>();
     CalculationManager::instance().addObserver(testNotifier);
     bool isRunning = true;
     while(isRunning) {
@@ -122,3 +150,20 @@ int main(int argc, const char * argv[]) {
 
     return 0;
 }
+/*
+
+int main(int argc, const char * argv[]) {
+    
+    
+    std::vector<float> degress;
+    degress.push_back(10);
+    degress.push_back(10);
+    degress.push_back(10);
+    degress.push_back(10);
+    degress.push_back(10);
+    
+    Test test;
+    test.notify(degress);
+    return 0;
+}
+*/

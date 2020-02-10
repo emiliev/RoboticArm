@@ -24,6 +24,7 @@ void ForwardKinematicsCommand::execute() {
     }
     robot->rotateJoints(degrees);
     robot->giveMeFullHM();
+    robot->notifyUpdatedJoints();
 }
 
 std::string ForwardKinematicsCommand::key() {

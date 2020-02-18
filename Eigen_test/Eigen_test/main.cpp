@@ -24,33 +24,32 @@ using namespace std;
 #include "CalculationObserver.hpp"
 #include "CalculationManager.hpp"
 //#include <serial.h>
-class Test: public CalculationObserver {
+//#include <sstream>
+class SerialLogger: public CalculationObserver {
 public:
     void notify(std::vector<float> updates) {
+        int outputFD = open("/dev/cu.usbserial-1420", O_RDWR);
+        if (outputFD == -1) {
+            fprintf(stderr, "Stream was unable to open!\n");
+            return;
+        }
 
-    int outputFD = open("/dev/cu.usbserial-1410", O_RDWR);
-    if (outputFD == -1) {
-        fprintf(stderr, "Stream was unable to open!\n");
-        return;
-    }
-
-    for (std::vector<float>::iterator it = updates.begin(); it != updates.end(); ++it) {
-        std::cout << (*it) << "\n";
-
-        write(outputFD, "Hello", 5);
-        char buf[13];
-        read(outputFD, buf, 13);
-        puts(buf);
-
-//        arduinoStream << (*it);
-    }
-
-    close(outputFD);
+        stringstream outputStream;
+        for (std::vector<float>::iterator it = updates.begin(); it != updates.end(); ++it) {
+            outputStream << (*it) << " ";
+        }
+        std::string outputData = outputStream.str();
+        size_t size = outputData.size();
+        write(outputFD, outputData.c_str(), size);
+        char buf[16];
+//        read(outputFD, buf, 16);
+//        puts(buf);
+        close(outputFD);
     }
 };
 
 
-class Logger: public CalculationObserver {
+class ConsoleLogger: public CalculationObserver {
 public:
     void notify(std::vector<float> updates) {
         for (std::vector<float>::iterator it = updates.begin(); it != updates.end(); ++it) {
@@ -68,6 +67,7 @@ void printMenu() {
         "h(H) - Show menu\n";
 }
 
+/*
 std::shared_ptr<Robot> createRobot() {
     float thita0 = 0;
     float thita1 = 90;
@@ -149,12 +149,9 @@ int main(int argc, const char * argv[]) {
     }
 
     return 0;
-}
-/*
+}*/
 
 int main(int argc, const char * argv[]) {
-    
-    
     std::vector<float> degress;
     degress.push_back(10);
     degress.push_back(10);
@@ -162,8 +159,10 @@ int main(int argc, const char * argv[]) {
     degress.push_back(10);
     degress.push_back(10);
     
-    Test test;
-    test.notify(degress);
+    ConsoleLogger consoleLogger;
+    consoleLogger.notify(degress);
+    
+    SerialLogger serialLogger;
+    serialLogger.notify(degress);
     return 0;
 }
-*/

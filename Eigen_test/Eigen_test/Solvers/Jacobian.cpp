@@ -43,12 +43,21 @@ void Jacobian::calculateJacobian( HomMatrixHolder& hom_matrix_handler , JointHan
     }
 
     unsigned int row_num = NUMBEROFSETPARAMETERS;
-
+    unsigned int size = hom_matrix_handler.size();
     //Set J confiruration
     setJacobianConfiguration(row_num , col_num);
+    
+    std::vector<Eigen::Matrix4f> trans_matrix_holder;
+    for (int index = 0; index < size + 1; ++index) {
+        trans_matrix_holder.push_back(Eigen::Matrix4f::Identity());
+    }
+
+    for (int index = 1; index < size + 1; ++index) {
+        trans_matrix_holder[index] = trans_matrix_holder[index - 1] * hom_matrix_handler[index - 1];
+    }
 
     for (unsigned int i = 1 ; i < col_num + 1 ; ++i) {
-        calculateColumnOfJacobian_New(hom_matrix_handler,DHINDEX(i),jhandler[DHINDEX(i)].getJointType(),full);
+        calculateColumnOfJacobian_New(trans_matrix_holder[i - 1],DHINDEX(i),jhandler[DHINDEX(i)].getJointType(),full);
     }
 }
 
@@ -72,10 +81,10 @@ Eigen::MatrixXf Jacobian::psevdoInverse() {
     return inv;
 }
 
-void Jacobian::calculateColumnOfJacobian_New(HomMatrixHolder& hom_matrix_handler, unsigned int ind, JointT jt, Eigen::Matrix4f& fullm) {
+void Jacobian::calculateColumnOfJacobian_New(Eigen::Matrix4f& hom_matrix_handler, unsigned int ind, JointT jt, Eigen::Matrix4f& fullm) {
     Eigen::Vector3f z0(0.0f , 0.0f , 1.0f);
     Eigen::Vector3f zi;
-    Eigen::Matrix4f transf_matrix;
+    Eigen::Matrix4f transf_matrix = hom_matrix_handler;
     Eigen::Matrix3f rot_m;
 
     Eigen::Vector3f p_end_effector;
@@ -83,12 +92,6 @@ void Jacobian::calculateColumnOfJacobian_New(HomMatrixHolder& hom_matrix_handler
 
     //Position of end effector
     p_end_effector<< fullm(0,3), fullm(1,3), fullm(2,3);
-    transf_matrix = Eigen::Matrix4f::Identity();
-
-    for(unsigned int i = 0 ; i < ind ; ++i) {
-        transf_matrix *= hom_matrix_handler[i];
-    }
-
     rot_m = transf_matrix.block(0,0,3,3);
 
     //

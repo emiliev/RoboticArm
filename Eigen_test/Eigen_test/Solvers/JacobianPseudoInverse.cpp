@@ -72,6 +72,12 @@ void JacobianPseudoInverse::updateJoints(Eigen::VectorXf& delta_theta ) {
         //TODO ADD CONSTRAINTS
         //new var = old var + delta var
         float res = delta_theta[i] + joints[i].giveMeVariableParametr();
+        
+        if ( res > 180) {
+            res = -180;
+        } else if (res < -180) {
+            res = 180;
+        }
         _robot->setJointVariable(i, res);
     }
     _robot->caclulateFullTransormationMatrix();

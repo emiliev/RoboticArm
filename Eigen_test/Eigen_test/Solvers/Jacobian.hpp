@@ -39,7 +39,7 @@ public:
 /************************************************************************/
 /* One column of J calculation function                                 */
 /************************************************************************/
-    void calculateColumnOfJacobian_New(HomMatrixHolder& hom_matrix_handler,
+    void calculateColumnOfJacobian_New(Eigen::Matrix4f& hom_matrix_handler,
                                        unsigned int ind ,
                                        JointT jt,
                                        Eigen::Matrix4f& full);

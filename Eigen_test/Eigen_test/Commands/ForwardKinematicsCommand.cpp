@@ -23,8 +23,8 @@ void ForwardKinematicsCommand::execute() {
         degrees.push_back(degree);
     }
     robot->rotateJoints(degrees);
-    robot->giveMeFullHM();
     robot->notifyUpdatedJoints();
+    robot->printFullTransformationMatrix();
 }
 
 std::string ForwardKinematicsCommand::key() {

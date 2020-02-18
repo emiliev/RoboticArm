@@ -61,7 +61,7 @@ public:
 
 
 void printMenu() {
-    cout << "/t Menu /t \n" <<
+    cout << "\t Menu \t \n" <<
         "i(I) - Inverse Kinematics\n" <<
         "f(F) - Forward Kinematics\n" <<
         "q(Q) - Quit\n" <<
@@ -102,7 +102,7 @@ std::shared_ptr<Robot> createRobot() {
 int main(int argc, const char * argv[]) {
 
     std::shared_ptr<Robot> robot = createRobot();
-    cout << "Choose inverse kinematics method, JacobianPseudoinverse(P) or JacobianTranspose(I): ";
+    cout << "Choose inverse kinematics method, JacobianPseudoinverse(P) or JacobianTranspose(T): ";
     char methodSymbol;
     cin >> methodSymbol;
     auto solver = SolverBuilder::createSolver(methodSymbol, robot);
